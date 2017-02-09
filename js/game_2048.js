@@ -14,6 +14,7 @@ function Game2048 () {
   ];
   this.hasWon = false;
   this.hasLost = false;
+  this.boardHasChanged = false;
 
   this._generateTile();
   this._generateTile();
@@ -68,6 +69,8 @@ Game2048.prototype._renderBoard = function () {
   this.board.forEach(function(row){
     console.log(row);
   });
+
+  console.log('Current Score: ' + this.score);
 };
 
 // Movement of the Tiles
@@ -80,6 +83,8 @@ Game2048.prototype._renderBoard = function () {
 
 Game2048.prototype.moveLeft = function () {
   var updatedBoard = [];
+  var theGame = this;
+
   this.board.forEach(function (row){
 
     // 1. Remove empties from row
@@ -95,6 +100,8 @@ Game2048.prototype.moveLeft = function () {
       if (newRow[i] === newRow[i + 1]) {
           newRow[i] = newRow[i] * 2; // changed here possible bug!!!
           newRow[i + 1] = null;
+
+          theGame._updateScore(newRow[i]);
       }
     }
 
@@ -108,8 +115,13 @@ Game2048.prototype.moveLeft = function () {
     });
 
     // 4. push() nulls until row has length === 4 again.
+    if (moved.length !== row.length) {
+      theGame.boardHasChanged = true;
+    }
+
     while (moved.length < 4){
       moved.push(null);
+
     }
 
     updatedBoard.push(moved);
@@ -122,6 +134,8 @@ Game2048.prototype.moveLeft = function () {
 
 Game2048.prototype.moveRight = function () {
   var updatedBoard = [];
+  var theGame = this;
+
   this.board.forEach(function (row){
 
     // 1. Remove empties from row
@@ -137,6 +151,8 @@ Game2048.prototype.moveRight = function () {
       if (newRow[i] === newRow[i - 1]) {
           newRow[i] = newRow[i] * 2;
           newRow[i - 1] = null;
+
+          theGame._updateScore(newRow[i]);
       }
     }
 
@@ -150,6 +166,10 @@ Game2048.prototype.moveRight = function () {
     });
 
     // 4. push() nulls until row has length === 4 again.
+    if (moved.length !== row.length) {
+      theGame.boardHasChanged = true;
+    }
+
     while (moved.length < 4){
       moved.unshift(null);
     }
@@ -174,10 +194,88 @@ Game2048.prototype._transposeMatrix = function () {
  // MOVING ****UP****
  // We take the current matrix and transpose it, so we can applay the left and right movement
  // to the game and not have to rewrite the logic. Google: transpose matrix to refresh.
- 
+
 Game2048.prototype.moveUp = function () {
   this._transposeMatrix();
   this.moveLeft();
   this._transposeMatrix();
 
+};
+
+Game2048.prototype.moveDown = function () {
+  this._transposeMatrix();
+  this.moveRight();
+  this._transposeMatrix();
+
+};
+
+Game2048.prototype.move = function (direction) {
+  if (this.hasWon || this.hasLost) {
+    return;
+  }
+  switch (direction) {
+    case 'up':
+      this.moveUp();
+      break;
+
+    case 'down':
+      this.moveDown();
+      break;
+
+    case 'left':
+      this.moveLeft();
+      break;
+
+    case 'up':
+      this.moveRight();
+      break;
+  }
+
+  if (this.boardHasChanged) {
+    this._generateTile();
+    this.isGameLost();
+    this.boardHasChanged = false;
+  }
+};
+
+Game2048.prototype._updateScore = function (value) {
+  this.score = this.score + value;
+
+  if (value === 2048) {
+
+  }
+};
+
+Game2048.prototype.isGameLost = function () {
+
+  if (this._getAvailablePosition() !== null) {
+    return;
+  }
+
+  var theGame = this;
+
+  this.board.forEach(function (row, rowIndex) {
+    row.forEach(function (cell, colIndex){
+
+      var current = that.board[rowIndex][cellIndex];
+      var top, bottom, left, right;
+
+      if (that.board[rowIndex][cellIndex - 1]) {
+        left  = that.board[rowIndex][cellIndex - 1];
+      }
+      if (that.board[rowIndex][cellIndex + 1]) {
+        right = that.board[rowIndex][cellIndex + 1];
+      }
+      if (that.board[rowIndex - 1]) {
+        top    = that.board[rowIndex - 1][cellIndex];
+      }
+      if (that.board[rowIndex + 1]) {
+        bottom = that.board[rowIndex + 1][cellIndex];
+      }
+
+      if (current === top || current === bottom || current === left || current === right) {
+        isLost = false;
+      }
+    });
+  });
 };
