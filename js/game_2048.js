@@ -69,3 +69,55 @@ Game2048.prototype._renderBoard = function () {
     console.log(row);
   });
 };
+
+// Movement of the Tiles
+// First we want to get rid of the empty spaces, which are null. [null, 2, null, 4] -> [2, 4]
+// Then we want to check if the numbers left are the same. If they are, then add them together into one numbers
+// Afterwards add null to the rest of the empty spaces of the array.length === 4.
+// Furthermore, we want to add a new tile AFTER the movement has happend.
+
+Game2048.prototype.moveLeft = function () {
+  var updatedBoard = [];
+  this.board.forEach(function (row){
+
+    // 1. Remove empties from row
+    var newRow = [];
+    row.forEach(function(cell) {
+      if (cell !== null) {
+        newRow.push(cell);
+      }
+    });
+
+    // 2. Merge tile in row that are together AND the same numbers
+    for (var i = 0; i < newRow.length; i++) {
+      if (newRow[i] === newRow[i + 1]) {
+          newRow[i] = newRow[i] * i;
+          newRow[i + 1] = null;
+      }
+    }
+
+    // 3. Remove newly created empties. eg [8, 8, 4]->[16, null, 4]
+    var moved = [];
+
+    newRow.forEach(function(cell) {
+      if (cell !== null) {
+        moved.push(cell);
+      }
+    });
+
+    // 4. push() nulls until row has length === 4 again.
+    while (moved.length < 4){
+      moved.push(null);
+    }
+
+    updatedBoard.push(moved);
+  });
+
+  this.board = updatedBoard;
+};
+
+walter = new Game2048();
+walter._renderBoard();
+walter.moveLeft();
+console.log ('');
+walter._renderBoard();
