@@ -159,3 +159,25 @@ Game2048.prototype.moveRight = function () {
 
   this.board = updatedBoard;
 };
+
+// TRANSPOSE MATRIX FOR UP AND DOWN MOVEMENT.
+
+Game2048.prototype._transposeMatrix = function () {
+  for (var row = 0; row < this.board.length; row++) {
+    for (var column = row+1; column < this.board.length; column++) {
+      var temp = this.board[row][column];
+      this.board[row][column] = this.board[column][row];
+      this.board[column][row] = temp;
+    }
+  }
+};
+ // MOVING ****UP****
+ // We take the current matrix and transpose it, so we can applay the left and right movement
+ // to the game and not have to rewrite the logic. Google: transpose matrix to refresh.
+ 
+Game2048.prototype.moveUp = function () {
+  this._transposeMatrix();
+  this.moveLeft();
+  this._transposeMatrix();
+
+};
