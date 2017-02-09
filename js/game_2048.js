@@ -242,7 +242,7 @@ Game2048.prototype._updateScore = function (value) {
   this.score = this.score + value;
 
   if (value === 2048) {
-
+    this.hasWon = true;
   }
 };
 
