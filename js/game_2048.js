@@ -226,7 +226,7 @@ Game2048.prototype.move = function (direction) {
       this.moveLeft();
       break;
 
-    case 'up':
+    case 'right':
       this.moveRight();
       break;
   }
@@ -260,16 +260,16 @@ Game2048.prototype.isGameLost = function () {
       var current = that.board[rowIndex][cellIndex];
       var top, bottom, left, right;
 
-      if (that.board[rowIndex][cellIndex - 1]) {
+      if (theGame.board[rowIndex][cellIndex - 1]) {
         left  = that.board[rowIndex][cellIndex - 1];
       }
-      if (that.board[rowIndex][cellIndex + 1]) {
+      if (theGame.board[rowIndex][cellIndex + 1]) {
         right = that.board[rowIndex][cellIndex + 1];
       }
-      if (that.board[rowIndex - 1]) {
+      if (theGame.board[rowIndex - 1]) {
         top    = that.board[rowIndex - 1][cellIndex];
       }
-      if (that.board[rowIndex + 1]) {
+      if (theGame.board[rowIndex + 1]) {
         bottom = that.board[rowIndex + 1][cellIndex];
       }
 
