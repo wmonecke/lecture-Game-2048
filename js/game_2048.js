@@ -48,8 +48,8 @@ Game2048.prototype._generateTile = function () {
 
 Game2048.prototype._getAvailablePosition = function () {
   var emptyTiles = [];
-
-  this.board.forEach(function (row, rowIndex) {
+  var that = this;
+  this.board.forEach(function (row, rowIndex) { // Game2048
     row.forEach(function (cell, colIndex){
       if (cell === null) {
         emptyTiles.push({ x: rowIndex, y: colIndex});
@@ -58,7 +58,7 @@ Game2048.prototype._getAvailablePosition = function () {
   });
 
   if (emptyTiles.length === 0) {
-    return null;
+    return that.hasLost;
   }
 
   var randomIndexOfEmptyTiles = Math.floor(Math.random() * emptyTiles.length);
@@ -239,6 +239,7 @@ Game2048.prototype.move = function (direction) {
 };
 
 Game2048.prototype._updateScore = function (value) {
+  ion.sound.play('shell_falling');
   this.score = this.score + value;
 
   if (value === 2048) {

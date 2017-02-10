@@ -5,7 +5,7 @@ $(document).ready(function(){
   myGame = new Game2048();
 
   renderTiles();
-
+  loadSounds();
   $(document).keydown(function(ev){
 
 
@@ -30,6 +30,7 @@ $(document).ready(function(){
     renderTiles();
     updateScore();
     checkIfDone();
+
   });
 });
 
@@ -72,4 +73,13 @@ function checkIfDone(){
     $('#game_board').remove();
      $('body').html('U LOST NUUB');
   }
+}
+
+function loadSounds () {
+  ion.sound({
+    sounds: [{name: "snap"}, {name: "tap"}, {name: "shell_falling"}],
+    path: "../lib/ion-sound/sounds/",
+    preload: true,
+    volume: 1.0
+  });
 }
