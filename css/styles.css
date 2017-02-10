@@ -1,10 +1,53 @@
+body {
+  background-color: #a0d2e8;
+  color: #3c5566;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  position: relative;
+  margin: 0 auto;
+  width: 620px;
+  text-align: center;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 85px;
+  text-align: left;
+}
+
+#score {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #72a2cb;
+  border-radius: 3px;
+  padding: 5px 15px;
+  display: inline-block;
+  background-color: #8bb2d4;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#score-display {
+  text-align: center;
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px #000;
+}
+
 #game-board {
   background: #3582b8;
   border-radius: 4px;
   padding: 10px;
   width: 600px;
-  margin: auto;
-  margin-top: 5px;
 }
 
 .clearfix {
@@ -16,46 +59,15 @@
   width: 100%;
 }
 
-.cell {
-  background: rgba(225, 226, 241, 0.5);
-  border-radius: 4px;
-  box-sizing: border-box;
-  height: 130px;
-  float: left;
-  margin: 10px;
-  width: 130px;
-}
-
-body {
-  background-image: url('../bg.jpg');
-  background-position: center;
-  background-size: cover;
-}
-
-#score{
-  text-align: center;
-  margin-top: 50px;
-  color: #3582b8;
-  font-family: sans-serif;
-  font-size: 40px;
-}
-
-h2 {
-  text-align: center;
-  color: black;
-  font-family: sans-serif;
-  font-size: 40px;
-}
-
 .cell,
 .tile {
   background: rgba(225, 226, 241, 0.5);
   border-radius: 4px;
   box-sizing: border-box;
+  width: 130px;
   height: 130px;
   float: left;
   margin: 10px;
-  width: 130px;
 }
 
 .tile {
@@ -87,6 +99,7 @@ h2 {
 .tile.tile-position-3-1 { transform: translate(150px, 450px); }
 .tile.tile-position-3-2 { transform: translate(300px, 450px); }
 .tile.tile-position-3-3 { transform: translate(450px, 450px); }
+
 
 .tile.val-2    { background: #93d2ff; }
 .tile.val-4    { background: #4ab5ff; }
